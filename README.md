@@ -1,2 +1,2 @@
-# wdg-drupal7-support-monitor
-A core and module monitor for Drupal 7.x
+# wdg-support-monitor
+Central repository for Support Monitor add-ons

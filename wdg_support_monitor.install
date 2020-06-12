@@ -1,0 +1,17 @@
+<?php
+
+require_once 'wdg_support_monitor.class.inc';
+
+/**
+ * Implements hook_install().
+ */
+function wdg_support_monitor_install() {
+  variable_set( WDG_Support_Monitor::LAST_RUN_KEY, NULL );
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function wdg_support_monitor_uninstall() {
+  variable_del( WDG_Support_Monitor::LAST_RUN_KEY );
+}
