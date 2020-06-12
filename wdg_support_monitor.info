@@ -1,7 +1,7 @@
 name = "WDG Support Monitor"
 description = "Monitors site status for support."
-version = 0.1.0
+version = 1.0.0-beta
 package = Support
 core = 7.x
 
-files[] = wdg_support_monitor.class.inc
+files[] = src/wdg_support_monitor.class.inc

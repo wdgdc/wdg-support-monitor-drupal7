@@ -1,6 +1,8 @@
 <?php
-
-require_once 'wdg_support_monitor.class.inc';
+/**
+ * @file Install
+ * @author Web Development Group (WDG) <https://www.webdevelopmentgroup.com>
+ */
 
 /**
  * Implements hook_install().
