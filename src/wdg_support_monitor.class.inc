@@ -18,14 +18,14 @@ final class WDG_Support_Monitor {
    *
    * @var string
    */
-  private $api_endpoint = 'http://localhost';
+  private $api_endpoint;
 
   /**
    * API Secret
    *
    * @var string
    */
-  private $api_secret = '';
+  private $api_secret;
 
   /**
    * Site URL
@@ -78,11 +78,27 @@ final class WDG_Support_Monitor {
 
     if ( defined( 'WDG_SUPPORT_MONITOR_API_SECRET' ) && ! empty( WDG_SUPPORT_MONITOR_API_SECRET ) ) {
       $this->api_secret = WDG_SUPPORT_MONITOR_API_SECRET;
-    } else {
-      $this->api_secret = hash( 'sha256', php_uname( 'n' ) );
     }
 
     $this->url = $GLOBALS['base_url'];
+  }
+
+  /**
+   * Is the module configured correctly?
+   *
+   * @return bool
+   */
+  public function is_configured() {
+    if ( empty( $this->api_endpoint ) || empty( $this->api_secret ) ) {
+      return false;
+    }
+
+    if ( filter_var( $this->api_endpoint, FILTER_VALIDATE_URL ) === false ) {
+      // Invalid API Endpoint
+      return false;
+    }
+
+    return true;
   }
 
   /**
@@ -268,13 +284,11 @@ final class WDG_Support_Monitor {
    * @return object|string Last run object on success, string error message on failure
    */
   public function update( $blocking = false ) {
+    if ( ! $this->is_configured() ) {
+      return sprintf( 'Unable to update! Incorrect configuration!' );
+    }
 
     flush(); // flush the output just in case we're on the front end
-
-    if ( filter_var( $this->api_endpoint, FILTER_VALIDATE_URL ) === false ) {
-      // Invalid API Endpoint
-      return sprintf( 'Invalid API Endpoint! %s', $this->api_endpoint );
-    }
 
     $data = $this->compile( REQUEST_TIME );
 

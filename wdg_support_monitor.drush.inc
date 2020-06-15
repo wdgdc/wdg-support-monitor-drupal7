@@ -12,10 +12,6 @@
  * hook_drush_command()
  */
 function wdg_support_monitor_drush_command() {
-  $formats = array(
-
-  );
-
   $items = array(
     'wdg-support-monitor-info' => array(
       'description' => 'Output support monitor info',
