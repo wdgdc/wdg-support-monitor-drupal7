@@ -1,6 +1,6 @@
 name = "WDG Support Monitor"
 description = "Monitors site status for support."
-version = 1.0.0
+version = 1.0.1
 package = Support
 core = 7.x
 
