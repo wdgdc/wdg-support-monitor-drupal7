@@ -108,10 +108,17 @@ final class WDG_Support_Monitor {
    * @return object
    */
   public function info() {
+
+    $url = $this->url;
+
+    if ( defined( 'WDG_SUPPORT_MONITOR_SITE_URL' ) && ! empty( WDG_SUPPORT_MONITOR_SITE_URL ) ) {
+      $url = WDG_SUPPORT_MONITOR_SITE_URL;
+    }
+
     $data = new \StdClass;
     $data->api_endpoint = $this->api_endpoint;
     $data->api_secret = $this->api_secret;
-    $data->url = $this->url;
+    $data->url = $url;
 
     return $data;
   }
@@ -236,7 +243,7 @@ final class WDG_Support_Monitor {
       $addon->type = preg_replace( '/-disabled$/', '', $project['project_type'] ); // Strip -disabled suffix
       $addon->current = $project['existing_version'];
       $addon->recommended = ! empty( $project['recommended'] ) ? $project['recommended'] : NULL;
-      $addon->active = $project['project_status'];
+      $addon->active = $project['project_status'] === true;
 
       array_push( $data, $addon );
     }
@@ -255,9 +262,16 @@ final class WDG_Support_Monitor {
     // Key is hash of site URL, secret, and timestamp
     $key = hash( 'sha256', $this->url . $this->api_secret . $timestamp );
 
+    $url = $this->url;
+
+    if ( defined( 'WDG_SUPPORT_MONITOR_SITE_URL' ) && ! empty( WDG_SUPPORT_MONITOR_SITE_URL ) ) {
+      $url = WDG_SUPPORT_MONITOR_SITE_URL;
+    }
+
+
     // Compile data
     $data = new \StdClass;
-    $data->url = $this->url;
+    $data->url = $url;
     $data->timestamp = $timestamp;
     $data->key = $key;
     $data->core = $this->compile_core();
