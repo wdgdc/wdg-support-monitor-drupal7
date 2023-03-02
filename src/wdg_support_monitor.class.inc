@@ -259,15 +259,14 @@ final class WDG_Support_Monitor {
    * @return object
    */
   private function compile( $timestamp ) {
-    // Key is hash of site URL, secret, and timestamp
-    $key = hash( 'sha256', $this->url . $this->api_secret . $timestamp );
-
     $url = $this->url;
 
     if ( defined( 'WDG_SUPPORT_MONITOR_SITE_URL' ) && ! empty( WDG_SUPPORT_MONITOR_SITE_URL ) ) {
       $url = WDG_SUPPORT_MONITOR_SITE_URL;
     }
 
+    // Key is hash of site URL, secret, and timestamp
+    $key = hash( 'sha256', $url . $this->api_secret . $timestamp );
 
     // Compile data
     $data = new \StdClass;
